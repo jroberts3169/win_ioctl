@@ -1,21 +1,21 @@
 {
     'targets': [{
         'target_name': 'win_ioctl',
-        'conditions': [
+        'include_dirs':
+        [
+            '<!(node -e "require(\'nan\')")'
+        ],
+        'conditions':  [
             [
-                'OS=="win"', {
-                    'sources': ['src/main.cc' ],
-                    'include_dirs':
-                    [
-                        '<!(node -e "require(\'nan\')")'
-                    ],
+                "OS=='win'", {
+                    'sources': ['src/main.cc'],
                 }
             ],
             [
-                'OS=="mac"', {
-                    'sources': ['LICENSE' ],
+                "OS=='mac'", {
+                    'sources': ['LICENSE'],
                 }
             ]
-        ],
+        ]
     }]
-} # type: ignore
+}
