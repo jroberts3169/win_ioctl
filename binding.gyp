@@ -13,7 +13,9 @@
             ],
             [
                 "OS=='mac'", {
-                    'sources': ['LICENSE'],
+                    'sources': [
+                        "<!@(node -p \"require('fs').readdirSync('./examples').map(f=>'src-mac/'+f).join(' ')\")"
+                    ],
                 }
             ]
         ]
