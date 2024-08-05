@@ -108,6 +108,7 @@ public:
 
 	void HandleErrorCallback()
 	{
+		v8::Isolate* isolate = v8::Isolate::GetCurrent();
 		Nan::HandleScope scope;
 
 		int err = m_caller.errorCode();
@@ -203,6 +204,7 @@ NAN_METHOD(win_ioctl)
 	else
 	{
 		IoctlCaller caller(handle, code, buffer, bufferSize, outBufferSize);
+		v8::Isolate* isolate = v8::Isolate::GetCurrent();
 		if (caller.isSuccess())
 			info.GetReturnValue().Set(node::Buffer::New(isolate, (char *)caller.out(), caller.outLength()).ToLocalChecked());
 		else
