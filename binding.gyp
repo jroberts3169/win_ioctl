@@ -3,7 +3,8 @@
         'target_name': 'win_ioctl',
         'include_dirs':
         [
-            '<!(node -e "require(\'nan\')")'
+            '<!(node -e "require(\'nan\')")',
+            '<!(node -e "require(\'node-addon-api\')")'
         ],
         'conditions':  [
             [

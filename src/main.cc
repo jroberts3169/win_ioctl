@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <io.h>
 #include <nan.h>
+#include <node.h>
 
 using namespace v8;
 using namespace node;
@@ -112,7 +113,7 @@ public:
 		int err = m_caller.errorCode();
 		Local<Value> argv[2] = {err >= 0 ? Nan::ErrnoException(err, "win_ioctl", m_caller.errorMsg(), nullptr) : Nan::Error(m_caller.errorMsg())};
 		if (m_caller.outLength())
-			argv[1] = Nan::NewBuffer((char *)m_caller.out(), m_caller.outLength()).ToLocalChecked();
+			argv[1] = node::Buffer::New(isolate, (char *)m_caller.out(), m_caller.outLength()).ToLocalChecked();
 		else
 			argv[1] = Nan::Null();
 		callback->Call(2, argv, async_resource);
@@ -203,7 +204,7 @@ NAN_METHOD(win_ioctl)
 	{
 		IoctlCaller caller(handle, code, buffer, bufferSize, outBufferSize);
 		if (caller.isSuccess())
-			info.GetReturnValue().Set(Nan::NewBuffer((char *)caller.out(), caller.outLength()).ToLocalChecked());
+			info.GetReturnValue().Set(node::Buffer::New(isolate, (char *)caller.out(), caller.outLength()).ToLocalChecked());
 		else
 		{
 			int err = caller.errorCode();
